@@ -31,7 +31,7 @@ public class CertificateResourceTest {
     }
 
     @Test
-    public void testCertificatePost() throws Exception {
+    public void testCertificateCreate() throws Exception {
         String fileName = "google.com.crt";
         byte[] pemEncodedCertificate = getClass().getClassLoader().getResourceAsStream(fileName).readAllBytes();
         X509Certificate certificate = Utils.parseCertificate(pemEncodedCertificate);
@@ -58,6 +58,18 @@ public class CertificateResourceTest {
         String sha256Fingerprint = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(certificate.getEncoded()));
         assertThat(id, equalTo(sha256Fingerprint));
 
+    	// given()
+	    //     .when()
+	    //         .get("/certificates/{id}", id)
+	    //     .then()
+        //         .statusCode(200)
+	    //         .body("subjectDN", is(certificate.getSubjectX500Principal().getName()))
+	    //         .body("issuerDN", is(certificate.getIssuerX500Principal().getName()))
+        //         .body("pemEncoded", startsWith("-----BEGIN CERTIFICATE-----\r\n"))
+        //         .body("pemEncoded", endsWith("-----END CERTIFICATE-----\r\n"))
+        //         .body("validNotAfter", equalTo("2023-04-03T08:16:57Z"))
+        //         .body("validNotBefore", equalTo("2023-01-09T08:16:58Z"))
+        //         ;             
     }
 
 }
