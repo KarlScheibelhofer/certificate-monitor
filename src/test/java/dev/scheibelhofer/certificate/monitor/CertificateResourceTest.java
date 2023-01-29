@@ -48,8 +48,8 @@ public class CertificateResourceTest {
 	            .body("issuerDN", is(certificate.getIssuerX500Principal().getName()))
                 .body("pemEncoded", startsWith("-----BEGIN CERTIFICATE-----\r\n"))
                 .body("pemEncoded", endsWith("-----END CERTIFICATE-----\r\n"))
-                .body("validNotAfter", equalTo("2023-04-03T08:16:57"))
-                .body("validNotBefore", equalTo("2023-01-09T08:16:58"))
+                .body("validNotAfter", equalTo("2023-04-03T08:16:57Z"))
+                .body("validNotBefore", equalTo("2023-01-09T08:16:58Z"))
 	        .extract()
             	.path("id");
 
@@ -67,8 +67,8 @@ public class CertificateResourceTest {
 	            .body("issuerDN", is(certificate.getIssuerX500Principal().getName()))
                 .body("pemEncoded", startsWith("-----BEGIN CERTIFICATE-----\r\n"))
                 .body("pemEncoded", endsWith("-----END CERTIFICATE-----\r\n"))
-                .body("validNotAfter", equalTo("2023-04-03T08:16:57"))
-                .body("validNotBefore", equalTo("2023-01-09T08:16:58"))
+                .body("validNotAfter", equalTo("2023-04-03T08:16:57Z"))
+                .body("validNotBefore", equalTo("2023-01-09T08:16:58Z"))
                 ;             
     }
 

@@ -1,6 +1,6 @@
 package dev.scheibelhofer.certificate.monitor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 
@@ -13,6 +13,6 @@ public class Certificate extends PanacheMongoEntityBase {
     public String pemEncoded;
     public String subjectDN;
     public String issuerDN;
-	public LocalDateTime validNotBefore;
-	public LocalDateTime validNotAfter;
+	public Instant validNotBefore;
+	public Instant validNotAfter;
 }

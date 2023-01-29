@@ -5,7 +5,6 @@ import static io.quarkiverse.loggingjson.providers.KeyValueStructuredArgument.kv
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.cert.X509Certificate;
-import java.time.ZoneOffset;
 import java.util.HexFormat;
 import java.util.Map;
 
@@ -59,8 +58,8 @@ public class CertificateService {
 		c.pemEncoded = Utils.pemEncode(x509Certificate.getEncoded(), "CERTIFICATE");
 		c.subjectDN = x509Certificate.getSubjectX500Principal().getName();
 		c.issuerDN = x509Certificate.getIssuerX500Principal().getName();
-		c.validNotBefore = x509Certificate.getNotBefore().toInstant().atOffset(ZoneOffset.UTC).toLocalDateTime();
-		c.validNotAfter = x509Certificate.getNotAfter().toInstant().atOffset(ZoneOffset.UTC).toLocalDateTime();
+		c.validNotBefore = x509Certificate.getNotBefore().toInstant();
+		c.validNotAfter = x509Certificate.getNotAfter().toInstant();
 		
 		return c;
     }
