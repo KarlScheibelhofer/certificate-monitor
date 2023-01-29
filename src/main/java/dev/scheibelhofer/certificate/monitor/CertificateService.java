@@ -59,8 +59,8 @@ public class CertificateService {
 		c.pemEncoded = Utils.pemEncode(x509Certificate.getEncoded(), "CERTIFICATE");
 		c.subjectDN = x509Certificate.getSubjectX500Principal().getName();
 		c.issuerDN = x509Certificate.getIssuerX500Principal().getName();
-		c.validNotBefore = x509Certificate.getNotBefore().toInstant().atOffset(ZoneOffset.UTC);
-		c.validNotAfter = x509Certificate.getNotAfter().toInstant().atOffset(ZoneOffset.UTC);
+		c.validNotBefore = x509Certificate.getNotBefore().toInstant().atOffset(ZoneOffset.UTC).toLocalDateTime();
+		c.validNotAfter = x509Certificate.getNotAfter().toInstant().atOffset(ZoneOffset.UTC).toLocalDateTime();
 		
 		return c;
     }
