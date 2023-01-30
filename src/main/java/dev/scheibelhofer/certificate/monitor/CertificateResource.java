@@ -1,5 +1,8 @@
 package dev.scheibelhofer.certificate.monitor;
 
+import java.security.cert.X509Certificate;
+import java.util.Collection;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
@@ -8,7 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -22,20 +25,13 @@ public class CertificateResource {
     CertificateService certificateService;    
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello RESTEasy";
-    }
-
-    @POST
-    @Consumes(MediaType.WILDCARD)
-    public Response importCertificate(byte[] encodedCertificate) { 
-        try {
-            Certificate certificate = certificateService.create(encodedCertificate);
-            return Response.status(Response.Status.CREATED).entity(certificate).build();
-        } catch (Exception e) {
-            throw new BadRequestException("invalid certificate", e);
+    public Collection<Certificate> list(@QueryParam("name") String name) {
+        if (name == null) {
+            Log.info("list all certificates");
+            return certificateService.getAll();
         }
+        Log.info("list keys with name " + name);
+        return certificateService.getBySubjectName(name);
     }
     
     @GET
@@ -44,6 +40,23 @@ public class CertificateResource {
         Log.debug("get certificate with id " + id);
 
         return certificateService.getById(id);
+    }
+
+    @POST
+    @Consumes(MediaType.WILDCARD)
+    public Response postCertificate(byte[] encodedCertificate) { 
+        Log.debug("post certificate");
+        try {
+            X509Certificate x509Certificate = Utils.parseCertificate(encodedCertificate);
+            Certificate certificate = certificateService.find(x509Certificate);
+            if (certificate != null) {
+                return Response.status(Response.Status.OK).entity(certificate).build();
+            }
+            certificate = certificateService.create(x509Certificate);
+            return Response.status(Response.Status.CREATED).entity(certificate).build();
+        } catch (Exception e) {
+            throw new BadRequestException("invalid certificate", e);
+        }
     }
     
 }
