@@ -23,7 +23,7 @@ import io.quarkus.logging.Log;
 public class CertificateResource {
 
     @Inject
-    CertificateService certificateService;    
+    CertificateService certificateService;
 
     @GET
     public Collection<Certificate> list(@QueryParam("subject") String subject, @QueryParam("dns") String dns) {
@@ -39,7 +39,7 @@ public class CertificateResource {
         Log.info("list all certificates");
         return certificateService.getAll();
     }
-    
+
     @GET
     @Path("/{id}")
     public Certificate get(@PathParam("id") String id) {
@@ -47,7 +47,7 @@ public class CertificateResource {
 
         return certificateService.getById(id);
     }
-    
+
     @DELETE
     @Path("/{id}")
     public Response detelte(@PathParam("id") String id) {
@@ -55,12 +55,12 @@ public class CertificateResource {
         if (certificateService.delete(id) == false) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.noContent().build();        
+        return Response.noContent().build();
     }
 
     @POST
     @Consumes(MediaType.WILDCARD)
-    public Response postCertificate(byte[] encodedCertificate) { 
+    public Response postCertificate(byte[] encodedCertificate) {
         Log.debug("post certificate");
         try {
             X509Certificate x509Certificate = Utils.parseCertificate(encodedCertificate);
@@ -74,5 +74,5 @@ public class CertificateResource {
             throw new BadRequestException("invalid certificate", e);
         }
     }
-    
+
 }
