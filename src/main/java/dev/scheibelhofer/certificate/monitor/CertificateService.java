@@ -6,6 +6,8 @@ import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HexFormat;
@@ -122,6 +124,17 @@ public class CertificateService {
             Log.infof("found no certificate with given id", kv("event", Map.of("id", id)));
             return false;
         }
+    }
+
+    public long deleteAll() {
+        return Certificate.deleteAll();
+    }
+
+    public Collection<Certificate> getByExpiration(String expiring) {
+        Duration duration = Duration.parse(expiring);
+        Instant expirationTime = Instant.now().plus(duration);
+        Collection<Certificate> expiringCertificates = Certificate.findExpiringBefore(expirationTime);
+	    return expiringCertificates;
     }
 
 }

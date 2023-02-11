@@ -26,7 +26,8 @@ public class CertificateResource {
     CertificateService certificateService;
 
     @GET
-    public Collection<Certificate> list(@QueryParam("subject") String subject, @QueryParam("dns") String dns) {
+    public Collection<Certificate> list(@QueryParam("subject") String subject, @QueryParam("dns") String dns,
+                                        @QueryParam("expiring") String expiring) {
         if (subject != null) {
             Log.info("list certificates with subject " + subject);
             return certificateService.getBySubjectName(subject);
@@ -34,6 +35,10 @@ public class CertificateResource {
         if (dns != null) {
             Log.info("list certificates with DNS " + dns);
             return certificateService.getByDNSName(dns);
+        }
+        if (expiring != null) {
+            Log.info("list certificates expiring in " + expiring);
+            return certificateService.getByExpiration(expiring);
         }
 
         Log.info("list all certificates");
@@ -49,8 +54,16 @@ public class CertificateResource {
     }
 
     @DELETE
+    public Response delete() {
+        Log.info("delete all certificates");
+        long entriesDeleted = certificateService.deleteAll();
+        Log.info("deletes number of certificates " + entriesDeleted);
+        return Response.noContent().build();
+    }
+
+    @DELETE
     @Path("/{id}")
-    public Response detelte(@PathParam("id") String id) {
+    public Response delete(@PathParam("id") String id) {
         Log.info("delete certificate with id " + id);
         if (certificateService.delete(id) == false) {
             return Response.status(Response.Status.NOT_FOUND).build();
