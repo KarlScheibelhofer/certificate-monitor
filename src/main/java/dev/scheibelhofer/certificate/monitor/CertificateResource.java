@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,13 +26,18 @@ public class CertificateResource {
     CertificateService certificateService;    
 
     @GET
-    public Collection<Certificate> list(@QueryParam("name") String name) {
-        if (name == null) {
-            Log.info("list all certificates");
-            return certificateService.getAll();
+    public Collection<Certificate> list(@QueryParam("subject") String subject, @QueryParam("dns") String dns) {
+        if (subject != null) {
+            Log.info("list certificates with subject " + subject);
+            return certificateService.getBySubjectName(subject);
         }
-        Log.info("list keys with name " + name);
-        return certificateService.getBySubjectName(name);
+        if (dns != null) {
+            Log.info("list certificates with DNS " + dns);
+            return certificateService.getByDNSName(dns);
+        }
+
+        Log.info("list all certificates");
+        return certificateService.getAll();
     }
     
     @GET
@@ -40,6 +46,16 @@ public class CertificateResource {
         Log.debug("get certificate with id " + id);
 
         return certificateService.getById(id);
+    }
+    
+    @DELETE
+    @Path("/{id}")
+    public Response detelte(@PathParam("id") String id) {
+        Log.info("delete certificate with id " + id);
+        if (certificateService.delete(id) == false) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.noContent().build();        
     }
 
     @POST
