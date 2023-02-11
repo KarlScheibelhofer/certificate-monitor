@@ -98,4 +98,7 @@ GET http://localhost:8080/certificates?dns=privacy.microsoft.com
 GET http://localhost:8080/certificates?dns=www.github.com
 ###
 GET http://localhost:8080/certificates/b7bc5510cc1c637b5e5fb785816a773dbb394b68337b1b117ca5ab43ccf778cf
-
+###
+GET http://localhost:8080/certificates
+Accept: text/csv
+###

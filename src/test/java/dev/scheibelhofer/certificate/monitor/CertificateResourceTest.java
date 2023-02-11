@@ -7,10 +7,12 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -294,6 +296,23 @@ public class CertificateResourceTest {
         assertThat(expiringCertList.get(0).id, equalTo(githubCertFile.getSha256fingerprint()));
         assertThat(expiringCertList.get(1).id, equalTo(googleCertFile.getSha256fingerprint()));
         assertThat(expiringCertList.get(2).id, equalTo(orfCertFile.getSha256fingerprint()));
+
+    	String csvString = given().header("Accept", "text/csv")
+            .when()
+                .queryParam("expiring", "P90D")
+                .get("/certificates")
+            .then()
+                .statusCode(200)
+            .extract().body().asString();
+        
+        List<String> csvLines = csvString.lines().collect(Collectors.toList());
+        String header = csvLines.remove(0);
+        assertThat(header, equalTo("validNotAfter;dnsNames;subjectDN;issuerDN;serial;id;validNotBefore;pemEncoded"));
+        String csvRegExp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z;[^;]*;[^;]*;[^;]*;[0-9a-f]*;[0-9a-f]*;\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z;-----BEGIN CERTIFICATE-----[0-9a-zA-Z+/=\\\\]*-----END CERTIFICATE-----(\\\\r\\\\n)*$";
+        assertTrue(csvLines.stream().allMatch(
+            s -> {
+                return s.matches(csvRegExp);
+            }));
 
         given().when().delete("/certificates/{id}", githubCertFile.getSha256fingerprint()).then().statusCode(204);
         given().when().delete("/certificates/{id}", googleCertFile.getSha256fingerprint()).then().statusCode(204);

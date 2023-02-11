@@ -8,15 +8,15 @@ import java.util.Base64;
 
 public final class Utils {
 
+    private Utils() {}
+
     public static X509Certificate parseCertificate(byte[] encodedCertificate) throws GeneralSecurityException {
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
-        X509Certificate x509Certificate = (X509Certificate) cf
-                .generateCertificate(new ByteArrayInputStream(encodedCertificate));
-        return x509Certificate;
+        return (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(encodedCertificate));
     }    
 
     public static String pemEncode(byte[] binary, String pemTypeName) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("-----").append("BEGIN ").append(pemTypeName).append("-----").append("\r\n");
         buffer.append(Base64.getMimeEncoder().encodeToString(binary)).append("\r\n");
         buffer.append("-----").append("END ").append(pemTypeName).append("-----").append("\r\n");

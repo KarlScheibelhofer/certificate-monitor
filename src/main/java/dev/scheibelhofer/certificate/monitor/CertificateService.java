@@ -32,7 +32,7 @@ public class CertificateService {
         long t1 = System.nanoTime();
         Log.infof("getById", kv("stats", Map.of(
             "id", id, 
-            "duration", Double.valueOf((t1 - t0)/1e6).toString(),
+            "duration", Double.toString((t1 - t0)/1e6),
             "found", Boolean.valueOf(c != null))));
         return c;
     }
@@ -81,7 +81,7 @@ public class CertificateService {
         Log.infof("created certificate", kv("event", Map.of("id", c.id)));
         long t1 = System.nanoTime();
 
-        Log.infof("create", kv("stats", Map.of("id", c.id, "duration", Double.valueOf((t1 - t0)/1e6).toString())));
+        Log.infof("create", kv("stats", Map.of("id", c.id, "duration", Double.toString((t1 - t0)/1e6))));
 
         return c;
     }
@@ -133,8 +133,7 @@ public class CertificateService {
     public Collection<Certificate> getByExpiration(String expiring) {
         Duration duration = Duration.parse(expiring);
         Instant expirationTime = Instant.now().plus(duration);
-        Collection<Certificate> expiringCertificates = Certificate.findExpiringBefore(expirationTime);
-	    return expiringCertificates;
+        return Certificate.findExpiringBefore(expirationTime);
     }
 
 }

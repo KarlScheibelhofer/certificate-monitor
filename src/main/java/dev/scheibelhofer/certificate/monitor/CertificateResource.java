@@ -12,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,8 +27,26 @@ public class CertificateResource {
     CertificateService certificateService;
 
     @GET
-    public Collection<Certificate> list(@QueryParam("subject") String subject, @QueryParam("dns") String dns,
-                                        @QueryParam("expiring") String expiring) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Certificate> list(@QueryParam("subject") String subject, @QueryParam("dns") String dns, @QueryParam("expiring") String expiring) {
+        Log.info("list all certificates as JSON");
+        return listCertificates(subject, dns, expiring);
+    }
+
+    @GET
+    @Produces("text/csv; qs=0.9")
+    public Response listCSV(@QueryParam("subject") String subject, @QueryParam("dns") String dns, @QueryParam("expiring") String expiring) {
+        Log.info("list all certificates as CSV");
+        Collection<Certificate> certList = listCertificates(subject, dns, expiring);
+        StringBuilder sb = new StringBuilder();
+        sb.append(Certificate.getCSVHeader());
+        for (Certificate cert : certList) {
+            sb.append("\r\n").append(cert.toCSV());
+        }
+        return Response.ok(sb.toString()).build();
+    }
+
+    private Collection<Certificate> listCertificates(String subject, String dns, String expiring) {
         if (subject != null) {
             Log.info("list certificates with subject " + subject);
             return certificateService.getBySubjectName(subject);

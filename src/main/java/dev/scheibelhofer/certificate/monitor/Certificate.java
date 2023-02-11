@@ -23,6 +23,15 @@ public class Certificate extends PanacheMongoEntityBase {
     public Instant validNotBefore;
     public Instant validNotAfter;
 
+    public String toCSV() {
+        return validNotAfter + ";" + String.join(",", dnsNames) + ";" + subjectDN + ";" + issuerDN + ";" + serial + ";" + id + ";" + validNotBefore + ";"
+                + pemEncoded.replace("\r\n", "\\r\\n");
+    }
+
+    public static String getCSVHeader() {
+        return "validNotAfter;dnsNames;subjectDN;issuerDN;serial;id;validNotBefore;pemEncoded";
+    }
+
     public static List<Certificate> findBySubjectName(String name) {
         return Certificate.list(format("{subjectDN: {$regex: /%s/i}}", name));
     }
