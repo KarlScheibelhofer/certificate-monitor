@@ -18,15 +18,15 @@ public class Certificate extends PanacheMongoEntityBase {
     public List<String> dnsNames;
     public String issuerDN;
     public String serial;
-	public Instant validNotBefore;
-	public Instant validNotAfter;
+    public Instant validNotBefore;
+    public Instant validNotAfter;
 
-	public static List<Certificate> findBySubjectName(String name) {
+    public static List<Certificate> findBySubjectName(String name) {
         return Certificate.list(format("{subjectDN: {$regex: /%s/i}}", name));
-	}
+    }
 
-	public static List<Certificate> findByDNSName(String name) {
+    public static List<Certificate> findByDNSName(String name) {
         return Certificate.list(format("{dnsNames: {$regex: /%s/i}}", name));
-	}
+    }
 
 }
