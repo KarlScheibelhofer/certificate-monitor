@@ -5,7 +5,7 @@ shopt -s nullglob
 _script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 _url="http://localhost:8080/certificates"
-_cert_files=(/etc/ssl/certs/*.pem ${_script_dir}/certificates/*.crt)
+_cert_files=(${_script_dir}/certificates/*.crt)
 
 for file in "${_cert_files[@]}"
 do
