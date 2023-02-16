@@ -15,6 +15,7 @@ public class Certificate extends PanacheMongoEntityBase {
     /** The SHA-256 fingerprint of the certificate serves as its ID. */
     @BsonId
     public String id;
+    public String name;
     public String subjectDN;
     public List<String> dnsNames;
     public String issuerDN;

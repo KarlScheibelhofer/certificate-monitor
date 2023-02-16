@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -91,10 +93,25 @@ public class CertificateService {
         c.pemEncoded = Utils.pemEncode(x509Certificate.getEncoded(), "CERTIFICATE");
         c.subjectDN = x509Certificate.getSubjectX500Principal().getName();
         c.dnsNames = extractDNSNames(x509Certificate);
+        c.name = selectName(c.dnsNames, c.subjectDN);
         c.issuerDN = x509Certificate.getIssuerX500Principal().getName();
         c.serial = x509Certificate.getSerialNumber().toString(16);
         c.validNotBefore = x509Certificate.getNotBefore().toInstant();
         c.validNotAfter = x509Certificate.getNotAfter().toInstant();
+    }
+
+    private String selectName(List<String> dnsNames, String subjectDN) {
+        if (subjectDN != null && !subjectDN.isEmpty()) {
+            Pattern regexp = Pattern.compile("CN\\=([^,]*)");
+            Matcher matcher = regexp.matcher(subjectDN);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        }
+        if (dnsNames != null && dnsNames.size() > 0) {
+            return dnsNames.get(0);
+        }
+        return subjectDN;
     }
 
     private List<String> extractDNSNames(X509Certificate cert) throws CertificateParsingException {
