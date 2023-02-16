@@ -1,104 +1,65 @@
-GET http://localhost:8080/certificates
+# this file contains HTTP requests fot the REST Client extension of visual studio code
+@url=http://localhost:8080/certificates
 
 ###
+# request all certificate, will be empty if just started
+GET {{url}}
 
-POST http://localhost:8080/certificates
+###
+# POST github certificate to the service
+# @name github
+POST {{url}}
 Content-Type: text/plain
 
------BEGIN CERTIFICATE-----
-MIII1jCCBr6gAwIBAgITMwBZ+Lbaholwb/ob2QAAAFn4tjANBgkqhkiG9w0BAQwF
-ADBZMQswCQYDVQQGEwJVUzEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9u
-MSowKAYDVQQDEyFNaWNyb3NvZnQgQXp1cmUgVExTIElzc3VpbmcgQ0EgMDYwHhcN
-MjIxMDA0MjMyMzExWhcNMjMwOTI5MjMyMzExWjBoMQswCQYDVQQGEwJVUzELMAkG
-A1UECBMCV0ExEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBD
-b3Jwb3JhdGlvbjEaMBgGA1UEAxMRd3d3Lm1pY3Jvc29mdC5jb20wggEiMA0GCSqG
-SIb3DQEBAQUAA4IBDwAwggEKAoIBAQC3XyMTbW+b+oTRRkirpEjsH/JiF2Dsy8Sj
-KGuCT5SSCO6qfDatzbUFzvMn7TFFAyOEWQhjp5vpAu3zZTu9jeezuXXJx1+2Ey15
-VnZJV3Q78zwJJ/3yTbiXfzhqYWr31Nm3boFzKZWZGZDHgY7epAdYwlOdLQk4QRHm
-3aJNOJWCgc1prSd/XgP+q9sYOnAYVRv9tGtkznTX6QaS82jWjDH8zHi299K8YQpk
-1aophTBJAitrpmBFSHvDgwMpurpx0rjAvq1Q27mTAWG07LMd7J7nyZiFzUxmFDDq
-2ix220yPEmL+wlz1dSqwNaIZi7f67Q9aQ5GnE0A5IPtK0eYp1AbvAgMBAAGjggSG
-MIIEgjCCAX8GCisGAQQB1nkCBAIEggFvBIIBawFpAHcA6D7Q2j71BjUy51covIlr
-yQPTy9ERa+zraeF3fW0GvW4AAAGDpVinhgAABAMASDBGAiEAnc/ZJKQ47TEBYPPo
-qSeM5wRPGELQmAw0i9hYMHUxdukCIQCoQvNpRxMnNH9beub6RbBYSHAIUSbgq6wK
-OTdFbfFNdwB1ALNzdwfhhFD4Y4bWBancEQlKeS2xZwwLh9zwAw55NqWaAAABg6VY
-p8YAAAQDAEYwRAIgPYOx2FZTNMcINed7dn+d75khk9ZstsbyvwPW8V2xtisCICGg
-1wuFd+KukXW8HeDa3mkloREsifgzeTBMGpwVwToMAHcArfe++nz/EMiLnT2cHj4Y
-arRnKV3PsQwkyoWGNOvcgooAAAGDpVinVwAABAMASDBGAiEAttaYStY88Acj2OSc
-nvx1RdlmZRFau8/aMIK/IQEYBisCIQDN/1i/tTTawY67Q4qAFnj1Eh+0kIvwUkrO
-TEV58sFRVjAnBgkrBgEEAYI3FQoEGjAYMAoGCCsGAQUFBwMCMAoGCCsGAQUFBwMB
-MDwGCSsGAQQBgjcVBwQvMC0GJSsGAQQBgjcVCIe91xuB5+tGgoGdLo7QDIfw2h1d
-goTlaYLzpz4CAWQCASUwga4GCCsGAQUFBwEBBIGhMIGeMG0GCCsGAQUFBzAChmFo
-dHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NlcnRzL01pY3Jvc29mdCUy
-MEF6dXJlJTIwVExTJTIwSXNzdWluZyUyMENBJTIwMDYlMjAtJTIweHNpZ24uY3J0
-MC0GCCsGAQUFBzABhiFodHRwOi8vb25lb2NzcC5taWNyb3NvZnQuY29tL29jc3Aw
-HQYDVR0OBBYEFGcNlofXWtjH6XjUmPrgobtxutaHMA4GA1UdDwEB/wQEAwIEsDCB
-mQYDVR0RBIGRMIGOghN3d3dxYS5taWNyb3NvZnQuY29tghF3d3cubWljcm9zb2Z0
-LmNvbYIYc3RhdGljdmlldy5taWNyb3NvZnQuY29tghFpLnMtbWljcm9zb2Z0LmNv
-bYINbWljcm9zb2Z0LmNvbYIRYy5zLW1pY3Jvc29mdC5jb22CFXByaXZhY3kubWlj
-cm9zb2Z0LmNvbTAMBgNVHRMBAf8EAjAAMGQGA1UdHwRdMFswWaBXoFWGU2h0dHA6
-Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lvcHMvY3JsL01pY3Jvc29mdCUyMEF6dXJl
-JTIwVExTJTIwSXNzdWluZyUyMENBJTIwMDYuY3JsMGYGA1UdIARfMF0wUQYMKwYB
-BAGCN0yDfQEBMEEwPwYIKwYBBQUHAgEWM2h0dHA6Ly93d3cubWljcm9zb2Z0LmNv
-bS9wa2lvcHMvRG9jcy9SZXBvc2l0b3J5Lmh0bTAIBgZngQwBAgIwHwYDVR0jBBgw
-FoAU1cFnOsKjnfR3UltZEjgp5lVou6UwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsG
-AQUFBwMBMA0GCSqGSIb3DQEBDAUAA4ICAQBxYv4ot1H2312MXlIvccktJlx1/zdq
-HvYlonJRgNH9Upyf69Mpd4bOvuPbV3GFf2kOYk2TrfMIsdgXVAsHhVJlGY/ybYkx
-GnYq3p16cTIDOO1sck352gM3y1n5BK21JMJL/pt1PYIgPnl3ED4DjaD1fucVT93B
-uvkW6N9er5YHQrXG6+gEPD4RZeXhtbIC7zMeBlpcbFG8pxp7vy2NmftNzIOaTkHw
-xT66cGEUgoPEt7ugcJr4nuq6OQ+m+wBZnv14GP+Rjcx6WXGeFIk4POG8XyEDKy22
-+EVODNuvHwWIBCKfxI8rZWf00CcLtVYupyUiAmoovM1TET/41sM2+sOxvTlNdxOL
-pnbVaeiDptMZKuQ0XkFshCJUZ/RhocrjsYNLANYbHoiaJT1lAqU7sTQgQocB34oY
-/Ojy975dBu3DnCebKaXEzjHtujLJ+1fMZ9uUbIP6/FwxL/UqvIpbpTnCoznvnpNE
-ii5x/Jh6Dg+ShpD2QyUE+1LvWhui9GNwm427cnRMHdxNGYHXAuFpGK8/ky3a849p
-xKqx4LNue0y/Rxd+s/EeJRmhF/mYcxzar7G/6T6TjHcjhIR7NTC3y7Q49L3LQdOx
-OtahCotJbc95k+AXudsfPlVLKsYJ6AF9NxN4K2miTmNqz+tmGiKoqbebOTHsd62i
-AstzF05URX9Y4w==
------END CERTIFICATE-----
+< ./github.com.crt
+
 ###
-POST http://localhost:8080/certificates
+# store the returned id field from the response in a variable for further reference
+@githubId = {{github.response.body.$.id}}
+GET {{url}}/{{githubId}}
+
+###
+# POST google certificate to the service
+# @name google
+POST {{url}}
 Content-Type: text/plain
 
------BEGIN CERTIFICATE-----
-MIIFajCCBPCgAwIBAgIQBRiaVOvox+kD4KsNklVF3jAKBggqhkjOPQQDAzBWMQsw
-CQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMTAwLgYDVQQDEydEaWdp
-Q2VydCBUTFMgSHlicmlkIEVDQyBTSEEzODQgMjAyMCBDQTEwHhcNMjIwMzE1MDAw
-MDAwWhcNMjMwMzE1MjM1OTU5WjBmMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2Fs
-aWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEVMBMGA1UEChMMR2l0SHVi
-LCBJbmMuMRMwEQYDVQQDEwpnaXRodWIuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0D
-AQcDQgAESrCTcYUh7GI/y3TARsjnANwnSjJLitVRgwgRI1JlxZ1kdZQQn5ltP3v7
-KTtYuDdUeEu3PRx3fpDdu2cjMlyA0aOCA44wggOKMB8GA1UdIwQYMBaAFAq8CCkX
-jKU5bXoOzjPHLrPt+8N6MB0GA1UdDgQWBBR4qnLGcWloFLVZsZ6LbitAh0I7HjAl
-BgNVHREEHjAcggpnaXRodWIuY29tgg53d3cuZ2l0aHViLmNvbTAOBgNVHQ8BAf8E
-BAMCB4AwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMIGbBgNVHR8EgZMw
-gZAwRqBEoEKGQGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydFRMU0h5
-YnJpZEVDQ1NIQTM4NDIwMjBDQTEtMS5jcmwwRqBEoEKGQGh0dHA6Ly9jcmw0LmRp
-Z2ljZXJ0LmNvbS9EaWdpQ2VydFRMU0h5YnJpZEVDQ1NIQTM4NDIwMjBDQTEtMS5j
-cmwwPgYDVR0gBDcwNTAzBgZngQwBAgIwKTAnBggrBgEFBQcCARYbaHR0cDovL3d3
-dy5kaWdpY2VydC5jb20vQ1BTMIGFBggrBgEFBQcBAQR5MHcwJAYIKwYBBQUHMAGG
-GGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBPBggrBgEFBQcwAoZDaHR0cDovL2Nh
-Y2VydHMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0VExTSHlicmlkRUNDU0hBMzg0MjAy
-MENBMS0xLmNydDAJBgNVHRMEAjAAMIIBfwYKKwYBBAHWeQIEAgSCAW8EggFrAWkA
-dgCt9776fP8QyIudPZwePhhqtGcpXc+xDCTKhYY069yCigAAAX+Oi8SRAAAEAwBH
-MEUCIAR9cNnvYkZeKs9JElpeXwztYB2yLhtc8bB0rY2ke98nAiEAjiML8HZ7aeVE
-P/DkUltwIS4c73VVrG9JguoRrII7gWMAdwA1zxkbv7FsV78PrUxtQsu7ticgJlHq
-P+Eq76gDwzvWTAAAAX+Oi8R7AAAEAwBIMEYCIQDNckqvBhup7GpANMf0WPueytL8
-u/PBaIAObzNZeNMpOgIhAMjfEtE6AJ2fTjYCFh/BNVKk1mkTwBTavJlGmWomQyaB
-AHYAs3N3B+GEUPhjhtYFqdwRCUp5LbFnDAuH3PADDnk2pZoAAAF/jovErAAABAMA
-RzBFAiEA9Uj5Ed/XjQpj/MxQRQjzG0UFQLmgWlc73nnt3CJ7vskCICqHfBKlDz7R
-EHdV5Vk8bLMBW1Q6S7Ga2SbFuoVXs6zFMAoGCCqGSM49BAMDA2gAMGUCMCiVhqft
-7L/stBmv1XqSRNfE/jG/AqKIbmjGTocNbuQ7kt1Cs7kRg+b3b3C9Ipu5FQIxAM7c
-tGKrYDGt0pH8iF6rzbp9Q4HQXMZXkNxg+brjWxnaOVGTDNwNH7048+s/hT9bUQ==
------END CERTIFICATE-----
+< ./google.com.crt
+
 ###
-GET http://localhost:8080/certificates?subject=microsoft.com
+# store the returned id field from the response in a variable for further reference
+@googleId = {{google.response.body.$.id}}
+GET {{url}}/{{googleId}}
+
 ###
-GET http://localhost:8080/certificates?dns=privacy.microsoft.com
+# POST microsoft certificate to the service
+# @name microsoft
+POST {{url}}
+Content-Type: text/plain
+
+< ./www.microsoft.com.crt
+
 ###
-GET http://localhost:8080/certificates?dns=www.github.com
+# store the returned id field from the response in a variable for further reference
+@microsoftId = {{microsoft.response.body.$.id}}
+GET {{url}}/{{microsoftId}}
+
 ###
-GET http://localhost:8080/certificates/b7bc5510cc1c637b5e5fb785816a773dbb394b68337b1b117ca5ab43ccf778cf
+# search for certificates with microsoft.com in the subject DN
+GET {{url}}?subject=microsoft.com
 ###
-GET http://localhost:8080/certificates
+# search for certificates with privacy.microsoft.com in the DNS names in subject alternative names
+GET {{url}}?dns=privacy.microsoft.com
+###
+# search for certificates with www.github.com in the DNS names in subject alternative names
+GET {{url}}?dns=www.github.com
+###
+# get all certificates as CSV list
+GET {{url}}
+Accept: text/csv
+###
+###
+# get a CSV list with all certificates expiring within the coming 365 days, sorted by expiration date
+GET {{url}}?expiring=P365D
 Accept: text/csv
 ###

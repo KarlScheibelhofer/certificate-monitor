@@ -38,12 +38,8 @@ public class CertificateResource {
     public Response listCSV(@QueryParam("subject") String subject, @QueryParam("dns") String dns, @QueryParam("expiring") String expiring) {
         Log.info("list all certificates as CSV");
         Collection<Certificate> certList = listCertificates(subject, dns, expiring);
-        StringBuilder sb = new StringBuilder();
-        sb.append(Certificate.getCSVHeader());
-        for (Certificate cert : certList) {
-            sb.append("\r\n").append(cert.toCSV());
-        }
-        return Response.ok(sb.toString()).build();
+        String csv = CSVSupport.toCSV(certList);
+        return Response.ok(csv).build();
     }
 
     private Collection<Certificate> listCertificates(String subject, String dns, String expiring) {

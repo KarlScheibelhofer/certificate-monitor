@@ -47,14 +47,15 @@ You can then execute your native executable with: `./target/certificate-monitor-
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 
-## Related Guides
+## Hints
 
-- Redis Client ([guide](https://quarkus.io/guides/redis)): Connect to Redis in either imperative or reactive style
+For some manual testnig on the command line:
 
-## Provided Code
+```bash
+./mvnw quarkus:dev
+src/test/resources/post-certificates.sh
+curl --request GET --url http://localhost:8080/certificates --header 'accept: text/csv' --silent --output src/test/resources/ca-certificates.csv
+curl --request GET --url http://localhost:8080/certificates\?expiring\=P365D --header 'accept: text/csv' --silent --output src/test/resources/certificates-365days.csv 
+```
 
-### RESTEasy JAX-RS
-
-Easily start your RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+Alternatively, use the requests for the vscode REST Client extension in file `src/test/resources/manual-tests.http`

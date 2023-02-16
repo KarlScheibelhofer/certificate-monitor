@@ -307,8 +307,8 @@ public class CertificateResourceTest {
         
         List<String> csvLines = csvString.lines().collect(Collectors.toList());
         String header = csvLines.remove(0);
-        assertThat(header, equalTo("validNotAfter;dnsNames;subjectDN;issuerDN;serial;id;validNotBefore;pemEncoded"));
-        String csvRegExp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z;[^;]*;[^;]*;[^;]*;[0-9a-f]*;[0-9a-f]*;\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z;-----BEGIN CERTIFICATE-----[0-9a-zA-Z+/=\\\\]*-----END CERTIFICATE-----(\\\\r\\\\n)*$";
+        assertThat(header, equalTo("validNotAfter,dnsNames,subjectDN,issuerDN,serial,id,validNotBefore,pemEncoded"));
+        String csvRegExp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z,(\\\"[^\\\"]*\\\"|[^,]*),(\\\"[^\\\"]*\\\"|[^,]*),(\\\"[^\\\"]*\\\"|[^,]*),[0-9a-f]*,[0-9a-f]*,\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z,-----BEGIN CERTIFICATE-----[0-9a-zA-Z+/=\\\\]*-----END CERTIFICATE-----(\\\\r\\\\n)*$";
         assertTrue(csvLines.stream().allMatch(
             s -> {
                 return s.matches(csvRegExp);

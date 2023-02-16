@@ -15,22 +15,13 @@ public class Certificate extends PanacheMongoEntityBase {
     /** The SHA-256 fingerprint of the certificate serves as its ID. */
     @BsonId
     public String id;
-    public String pemEncoded;
     public String subjectDN;
     public List<String> dnsNames;
     public String issuerDN;
     public String serial;
     public Instant validNotBefore;
     public Instant validNotAfter;
-
-    public String toCSV() {
-        return validNotAfter + ";" + String.join(",", dnsNames) + ";" + subjectDN + ";" + issuerDN + ";" + serial + ";" + id + ";" + validNotBefore + ";"
-                + pemEncoded.replace("\r\n", "\\r\\n");
-    }
-
-    public static String getCSVHeader() {
-        return "validNotAfter;dnsNames;subjectDN;issuerDN;serial;id;validNotBefore;pemEncoded";
-    }
+    public String pemEncoded;
 
     public static List<Certificate> findBySubjectName(String name) {
         return Certificate.list(format("{subjectDN: {$regex: /%s/i}}", name));
@@ -41,7 +32,7 @@ public class Certificate extends PanacheMongoEntityBase {
     }
 
     public static Collection<Certificate> findExpiringBefore(Instant expirationTime) {
-        return Certificate.list("validNotAfter < ?1", expirationTime, Sort.by("validNotAfter"));
+        return Certificate.list("validNotAfter < ?1", Sort.ascending("validNotAfter"), expirationTime);
     }
 
 }
