@@ -21,7 +21,7 @@ public class CertFile {
     public static CertFile parse(String filename) throws IOException, GeneralSecurityException {
         CertFile certFile = new CertFile();
         certFile.filename = filename;
-        certFile.pemEncodedCertificate = CertFile.class.getClassLoader().getResourceAsStream(filename).readAllBytes();
+        certFile.pemEncodedCertificate = CertFile.class.getClassLoader().getResourceAsStream("certificates/" + filename).readAllBytes();
         certFile.certificate = parseX509Certificate(certFile.pemEncodedCertificate);
         certFile.sha256fingerprint = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(certFile.certificate.getEncoded()));
         return certFile;
