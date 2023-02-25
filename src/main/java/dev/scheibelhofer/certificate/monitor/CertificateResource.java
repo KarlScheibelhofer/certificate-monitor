@@ -28,21 +28,21 @@ public class CertificateResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<Certificate> list(@QueryParam("subject") String subject, @QueryParam("dns") String dns, @QueryParam("expiring") String expiring) {
+    public Collection<Certificate> list(@QueryParam("subject") String subject, @QueryParam("dns") String dns, @QueryParam("expiring") String expiring, @QueryParam("sortBy") String sortBy) {
         Log.info("list all certificates as JSON");
-        return listCertificates(subject, dns, expiring);
+        return listCertificates(subject, dns, expiring, sortBy);
     }
 
     @GET
     @Produces("text/csv; qs=0.9")
-    public Response listCSV(@QueryParam("subject") String subject, @QueryParam("dns") String dns, @QueryParam("expiring") String expiring) {
+    public Response listCSV(@QueryParam("subject") String subject, @QueryParam("dns") String dns, @QueryParam("expiring") String expiring, @QueryParam("sortBy") String sortBy) {
         Log.info("list all certificates as CSV");
-        Collection<Certificate> certList = listCertificates(subject, dns, expiring);
+        Collection<Certificate> certList = listCertificates(subject, dns, expiring, sortBy);
         String csv = CSVSupport.toCSV(certList);
         return Response.ok(csv).build();
     }
 
-    private Collection<Certificate> listCertificates(String subject, String dns, String expiring) {
+    private Collection<Certificate> listCertificates(String subject, String dns, String expiring, String sortBy) {
         if (subject != null) {
             Log.info("list certificates with subject " + subject);
             return certificateService.getBySubjectName(subject);
@@ -57,7 +57,7 @@ public class CertificateResource {
         }
 
         Log.info("list all certificates");
-        return certificateService.getAll();
+        return certificateService.getAll(sortBy);
     }
 
     @GET

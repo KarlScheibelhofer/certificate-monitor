@@ -21,6 +21,7 @@ import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import io.quarkus.logging.Log;
+import io.quarkus.panache.common.Sort;
 
 @ApplicationScoped
 public class CertificateService {
@@ -42,6 +43,11 @@ public class CertificateService {
     public Collection<Certificate> getAll() {
         Log.infof("getAll", kv("logId", logId));
         return Certificate.listAll();
+    }
+
+    public Collection<Certificate> getAll(String sortBy) {
+        Log.infof("getAll", kv("logId", logId));
+        return Certificate.listAll(Sort.by(sortBy));
     }
 
     public Collection<Certificate> getBySubjectName(String name) {
