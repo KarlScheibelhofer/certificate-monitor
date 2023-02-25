@@ -58,4 +58,10 @@ curl --request GET --url http://localhost:8080/certificates --header 'accept: te
 curl --request GET --url http://localhost:8080/certificates\?expiring\=P365D --header 'accept: text/csv' --silent --output src/test/resources/certificates-365days.csv 
 ```
 
+```bash
+./mvnw quarkus:dev
+ ./src/test/resources/post-local-certificates.sh
+curl --request GET --url http://localhost:8080/certificates | jq '. | length'
+```
+
 Alternatively, use the requests for the vscode REST Client extension in file `src/test/resources/manual-tests.http`
