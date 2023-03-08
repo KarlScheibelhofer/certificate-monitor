@@ -40,14 +40,10 @@ public class CertificateService {
         return c;
     }
 
-    public Collection<Certificate> getAll() {
-        Log.infof("getAll", kv("logId", logId));
-        return Certificate.listAll();
-    }
-
     public Collection<Certificate> getAll(String sortBy) {
         Log.infof("getAll", kv("logId", logId));
-        return Certificate.listAll(Sort.by(sortBy));
+        Sort sort = (sortBy != null) ? Sort.by(sortBy) : Sort.by("validNotAfter");
+        return Certificate.listAll(sort);
     }
 
     public Collection<Certificate> getBySubjectName(String name) {

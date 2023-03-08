@@ -272,7 +272,7 @@ public class CertificateResourceTest {
     @Test
     @Order(6)
     public void testListExpiringCerts() throws Exception {
-        // ❯ for f in src/test/resources/*.crt; do echo -n "$f - "; openssl x509 -in $f -noout -enddate; done
+        // ❯ for f in src/test/resources/certificates/*.crt; do echo -n "$f - "; openssl x509 -in $f -noout -enddate; done
         // src/test/resources/github.com.crt - notAfter=Mar 15 23:59:59 2023 GMT
         // src/test/resources/google.com.crt - notAfter=Apr  3 08:16:57 2023 GMT
         // src/test/resources/orf.at.crt - notAfter=Apr 22 12:03:50 2023 GMT
@@ -286,20 +286,21 @@ public class CertificateResourceTest {
         // search for certificates expiring in the next 90 days, specified as ISO-8601 period
     	List<Certificate> expiringCertList = given()
             .when()
-                .queryParam("expiring", "P90D")
+                .queryParam("expiring", "P399D")
                 .get("/certificates")
             .then()
                 .statusCode(200)
             .extract().body().jsonPath().getList("", Certificate.class);
 
-        assertThat(expiringCertList.size(), equalTo(3));
-        assertThat(expiringCertList.get(0).id, equalTo(githubCertFile.getSha256fingerprint()));
+        assertThat(expiringCertList.size(), equalTo(4));
+        assertThat(expiringCertList.get(0).id, equalTo(orfCertFile.getSha256fingerprint()));
         assertThat(expiringCertList.get(1).id, equalTo(googleCertFile.getSha256fingerprint()));
-        assertThat(expiringCertList.get(2).id, equalTo(orfCertFile.getSha256fingerprint()));
+        assertThat(expiringCertList.get(2).id, equalTo(microsoftCertFile.getSha256fingerprint()));
+        assertThat(expiringCertList.get(3).id, equalTo(githubCertFile.getSha256fingerprint()));
 
     	String csvString = given().header("Accept", "text/csv")
             .when()
-                .queryParam("expiring", "P90D")
+                .queryParam("expiring", "P399D")
                 .get("/certificates")
             .then()
                 .statusCode(200)
